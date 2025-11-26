@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Stop Ambulance Balance Bills</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A public-interest initiative dedicated to ending surprise balance billing for ground ambulance rides in the United States.">
+  <style>
+    :root {
+      --bg: #050811;
+      --bg-alt: #0b1324;
+      --accent: #ff4d4f;
+      --accent-soft: #ff9f9f;
+      --text: #f7f7ff;
+      --text-muted: #c4c7e0;
+      --card: #111827;
+      --max-width: 960px;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 55%, #000 100%);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(8,47,73,0.96));
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.8rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      color: var(--accent-soft);
+    }
+
+    .nav-tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+      max-width: 220px;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .hero {
+      max-width: var(--max-width);
+      margin: 1.8rem auto 0;
+      padding: 2.2rem 1.25rem 2.8rem;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 2.2rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.9rem, 3vw, 2.4rem);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-highlight {
+      color: var(--accent);
+    }
+
+    .hero-lede {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(248, 250, 252, 0.16);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent-soft);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease,
+                  border-color 0.12s ease, color 0.12s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ef4444, #fb923c);
+      color: #0b1020;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(248, 113, 113, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(248, 113, 113, 0.5);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+      border-color: rgba(148, 163, 184, 0.4);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 1);
+      color: var(--text);
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .stat-card {
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.06), transparent),
+                  linear-gradient(145deg, #020617, #020617, #020617, #020617);
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 1.2rem 1.25rem 1.3rem;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.85);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card h2 {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .stat-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .stat-value span {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--accent-soft);
+      margin-left: 0.25rem;
+    }
+
+    .stat-footnote {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      margin-top: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+      gap: 0.3rem;
+      align-items: center;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 10px rgba(248, 113, 113, 0.8);
+    }
+
+    section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.25rem 2.2rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.9);
+      border-radius: var(--radius);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 1rem;
+      box-shadow: 0 16px 35px rgba(15, 23, 42, 0.75);
+    }
+
+    .card h3 {
+      font-size: 0.98rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .list {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      padding-left: 1.1rem;
+      margin-top: 0.3rem;
+    }
+
+    .list li {
+      margin-bottom: 0.25rem;
+    }
+
+    .cta {
+      background: radial-gradient(circle at top, rgba(248, 113, 113, 0.2), rgba(15, 23, 42, 0.98));
+      border-radius: var(--radius);
+      border: 1px solid rgba(248, 113, 113, 0.6);
+      padding: 1.3rem 1.2rem 1.4rem;
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 2fr);
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .cta h2 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .cta p {
+      font-size: 0.86rem;
+      color: #fef2f2;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      justify-content: flex-end;
+    }
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 0.8rem 1.25rem 1.1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    a {
+      color: var(--accent-soft);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .stat-card {
+        order: -1;
+      }
+
+      .cta {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .cta-actions {
+        justify-content: flex-start;
+      }
+
+      .columns {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+      }
+
+      .nav-tagline {
+        text-align: left;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="nav-inner">
+    <div class="logo">Stop Ambulance Balance Bills</div>
+    <div class="nav-tagline">Because when you call 911, you shouldn&rsquo;t get a $5,000 bill.</div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div>
+      <div class="hero-badge">
+        <span>Public-interest project</span>
+      </div>
+      <h1>End <span class="hero-highlight">surprise ambulance bills</span> in the United States.</h1>
+      <p class="hero-lede">
+        We are a grassroots effort to stop patients from being hit with massive, out-of-network ambulance charges
+        after calling 911. Emergency care should save your life &mdash; not wreck your finances.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#take-action">
+          Join the campaign →
+        </a>
+        <a class="btn btn-ghost" href="#learn">
+          Learn what balance billing is
+        </a>
+      </div>
+      <p class="hero-note">
+        This is an early-stage project. Content, data, and tools will be published here as the campaign grows.
+      </p>
+    </div>
+
+    <aside class="stat-card" aria-label="Quick facts">
+      <h2>What&rsquo;s happening now?</h2>
+      <div class="stat-grid">
+        <div class="stat">
+          <span class="stat-label">Out-of-network rides</span>
+          <span class="stat-value">Most<span>of ground ambulances</span></span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Typical surprise bill</span>
+          <span class="stat-value">$1,000–$5,000<span>per trip</span></span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Patient choice</span>
+          <span class="stat-value">Zero<span>in an emergency</span></span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Federal protection</span>
+          <span class="stat-value">Missing<span>for ground ambulances</span></span>
+        </div>
+      </div>
+      <p class="stat-footnote">
+        Balance billing happens when an out-of-network ambulance sends patients the &ldquo;leftover&rdquo; of its
+        charges after insurance pays only part.
+      </p>
+      <div class="pill">
+        <span class="pill-dot"></span>
+        <span>Goal: Full national ban on ambulance balance billing</span>
+      </div>
+    </aside>
+  </section>
+
+  <section id="learn">
+    <h2 class="section-title">What is ambulance balance billing?</h2>
+    <p class="section-subtitle">
+      You don&rsquo;t get to choose which ambulance shows up when you dial 911. But if that ambulance is out-of-network,
+      you can still be billed for the difference between what the company charges and what your insurer decides to pay.
+    </p>
+
+    <div class="columns">
+      <article class="card">
+        <h3>1. Emergency → out-of-network ride</h3>
+        <p>
+          In most cities, the ambulance that responds is determined by dispatch, not by you.
+          Many of those providers are not in your insurance network, even for people with solid coverage.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>2. Insurer pays part of the bill</h3>
+        <p>
+          Your insurer pays what it thinks the ride should cost &mdash; often far less than the ambulance company charges.
+          There is no standard pricing, and billed amounts can be thousands of dollars.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>3. You get the “balance bill”</h3>
+        <p>
+          The ambulance company then bills <em>you</em> for the rest: the balance.
+          Patients are left with huge, unexpected invoices, aggressive collection tactics, and damaged credit
+          &mdash; all for doing the right thing in an emergency.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section id="take-action">
+    <div class="cta">
+      <div>
+        <h2>Help us stop ambulance balance billing.</h2>
+        <p>
+          We are building a public-interest resource with stories, data, tools, and policy proposals to eliminate
+          surprise ambulance bills nationwide. You can help by sharing your experience, contributing research,
+          or pushing lawmakers to act.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-primary" href="mailto:contact@stopambulancebalancebills.org?subject=I%20want%20to%20help%20stop%20ambulance%20balance%20bills">
+          Share your story
+        </a>
+        <a class="btn btn-ghost" href="mailto:contact@stopambulancebalancebills.org?subject=Collaboration%20or%20research%20idea">
+          Collaborate / send ideas
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div>© <span id="year"></span> StopAmbulanceBalanceBills.org · Public-interest initiative</div>
+    <div>Maintained by Jonathan Kendall (onojk123)</div>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</footer>
+</body>
+</html>
