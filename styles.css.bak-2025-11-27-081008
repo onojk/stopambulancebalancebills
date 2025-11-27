@@ -445,8 +445,94 @@ a:hover {
   .nav-tagline {
     max-width: none;
   }
-nav a {
-    margin: 0 8px;
-    display: inline-block;
 }
+
+/* Global nav link spacing */
+nav a {
+  margin: 0 8px;
+  display: inline-block;
+}
+
+/* Story page tweaks */
+.story p {
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.card h2,
+.card h3 {
+  margin-top: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+/* Email button on Stories page */
+.email-button {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #2da4ff;
+  color: #fff !important;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border: 1px solid rgba(148, 163, 184, 0.8);
+}
+
+.email-button:hover {
+  text-decoration: none;
+  filter: brightness(1.05);
+}
+
+/* Tips section on letter generator */
+.tips details {
+  margin-bottom: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.4);
+}
+
+.tips summary {
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.tips p,
+.tips ul {
+  font-size: 0.84rem;
+  margin-top: 0.35rem;
+}
+
+/* Example Letters section */
+.examples pre {
+  background: rgba(2, 6, 23, 0.85);
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  overflow-x: auto;
+}
+
+.examples summary {
+  cursor: pointer;
+  font-size: 0.88rem;
+  margin-bottom: 0.4rem;
+}
+
+
+/* Regulator helper section */
+.regulator-helper-select {
+  margin-top: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: #020617;
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.regulator-info {
+  margin-top: 0.7rem;
+  font-size: 0.84rem;
+  color: var(--text-muted);
 }

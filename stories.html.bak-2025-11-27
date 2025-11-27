@@ -8,38 +8,71 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://stopambulancebalancebills.org/stories.html">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Real Experiences & Common Patterns | Stop Ambulance Bills</title>
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="icon" type="image/png" href="/favicon.png">
+  <title>Real Experiences & Common Patterns | Stop Ambulance Balance Bills</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-  <div class="nav-inner">
-    <div class="nav-left">
-      <a href="/" class="logo">Stop Ambulance Balance Bills</a>
-      <div class="nav-tagline">Because when you call 911, you shouldn&rsquo;t get a $5,000 bill.</div>
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">🚑</span>
+        <span class="logo-text">Stop Ambulance Balance Bills</span>
+      </a>
+      <nav class="main-nav">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="stories.html" class="active">Stories</a>
+        <a href="policy.html">Policy</a>
+        <a href="take-action.html">Take action</a>
+        <a href="about.html">About</a>
+      </nav>
     </div>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/learn.html">Learn</a>
-      <a href="/stories.html">Stories</a>
-      <a href="/policy.html">Policy</a>
-      <a href="/take-action.html">Take Action</a>
-      <a href="/resources.html">Resources</a>
-      <a href="/media.html">Media</a>
-      <a href="/letter-generator.html">Letter Generator</a>
-      <a href="/about.html">About</a>
-    </nav>
-  </div>
-</header>
+  </header>
 
   <main>
-    <!-- Hero: intro only -->
     <section class="hero hero-subpage">
       <div class="container hero-grid">
         <div>
           <p class="pill">Real experiences, shared patterns</p>
           <h1>How ambulance balance billing shows up in people’s lives</h1>
+
+<h3>Common patterns reported across the United States</h3>
+<p>Ambulance balance billing can affect anyone who dials 911. These themes appear repeatedly in patient complaints, state investigations, and consumer reports. No individual patient is quoted or described directly.</p>
+
+<ol>
+  <li><strong>Out-of-network ambulance, in-network hospital</strong><br>
+      Many patients discover the ambulance responding to their emergency was out of network, even though the hospital they were taken to was in network. This mismatch is caused by dispatch—not patient choice.</li>
+
+  <li><strong>High charges and large balance bills</strong><br>
+      Ground ambulance bills often range from $1,000–$5,000+. Insurers may cover only what they consider “reasonable,” leaving large unpaid portions that become balance bills.</li>
+
+  <li><strong>Short trips with long-term financial impact</strong><br>
+      Bills for rides lasting under 20 minutes can create months or years of stress. For many households, a sudden bill larger than rent or a mortgage payment is financially devastating.</li>
+
+  <li><strong>Confusing or incomplete billing information</strong><br>
+      Bills frequently provide minimal detail—often just a total charge and a generic code. Patients rarely receive an itemized bill unless they request one.</li>
+
+  <li><strong>Billing and collections during appeals</strong><br>
+      Some ambulance providers continue billing—or even send accounts to collections—while insurance appeals are still pending, adding unnecessary stress.</li>
+
+  <li><strong>Lack of awareness about rights and options</strong><br>
+      Many people do not know they can dispute a bill, request an itemized statement, appeal insurer decisions, or file complaints with state regulators.</li>
+</ol>
+
+<h2>If you’ve received an ambulance bill, here are practical steps</h2>
+<p>These are not legal or financial recommendations, but they are commonly helpful when attempting to understand or challenge an ambulance bill:</p>
+<ul>
+  <li><strong>Collect all paperwork.</strong> Save every bill, Explanation of Benefits (EOB), and communication from the provider and insurer.</li>
+  <li><strong>Request an itemized bill.</strong> Ask for a full breakdown showing every charge, code, and date of service.</li>
+  <li><strong>Confirm network status.</strong> Check whether the ambulance provider and hospital were in or out of network.</li>
+  <li><strong>Call your insurer.</strong> Request a written explanation of what was paid, denied, and why.</li>
+  <li><strong>File an appeal if appropriate.</strong> Many people succeed in getting reductions or reprocessing by filing an internal appeal.</li>
+  <li><strong>Know your state resources.</strong> Some states have consumer assistance programs or ombuds offices that review medical billing disputes.</li>
+</ul>
+
+<h2>Share your experience or contribute anonymized data</h2>
+<p>Anonymized stories help policymakers understand the real-world impact of ambulance balance billing. Please avoid sharing sensitive information such as Social Security numbers, full medical records, or login details. Personal identifiers can be removed before anything is used publicly.</p>
+
           <p class="hero-text">
             This page summarizes <strong>common patterns</strong> that show up again and again
             in ambulance billing complaints, regulatory reports, and patient stories.
@@ -61,8 +94,7 @@
       </div>
     </section>
 
-    <!-- Common patterns -->
-    <section class="page">
+    <section class="section">
       <div class="container">
         <h2>Common patterns reported across the United States</h2>
         <p>
@@ -134,8 +166,7 @@
       </div>
     </section>
 
-    <!-- Practical steps -->
-    <section class="page section-alt">
+    <section class="section section-alt">
       <div class="container">
         <h2>If you’ve received an ambulance bill, here are practical steps</h2>
         <p>
@@ -187,8 +218,7 @@
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="page">
+    <section class="section">
       <div class="container cta-panel">
         <div>
           <h2>Share your experience or contribute anonymized data</h2>
@@ -216,8 +246,7 @@
       </div>
     </section>
 
-    <!-- Disclaimer -->
-    <section class="page section-alt">
+    <section class="section section-alt">
       <div class="container">
         <h2>Important disclaimer</h2>
         <p>

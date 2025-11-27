@@ -2,6 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Use this free tool to generate customized letters for disputing ambulance bills, appealing insurance claims, or filing state complaints.">
+    <meta name="keywords" content="ambulance bill letter, dispute ambulance bill template, EMS billing appeal letter, insurance complaint tool">
+    <meta name="author" content="Jonathan Kendall">
+    <meta name="robots" content="index, follow">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Letter Generator – Stop Ambulance Balance Bills</title>
     <link rel="stylesheet" href="styles.css">
@@ -535,6 +540,8 @@ Sincerely,
     <button type="button" class="btn btn-ghost" onclick="copyRegulatorLinks()" style="margin-top:0.4rem;">
         Copy Regulator Search Links
     </button>
+    
+
 
 <div id="regulatorInfo" class="regulator-info">
         <p>Select your state to see suggestions for who to contact.</p>
@@ -769,3 +776,35 @@ function copySearchPhrases() {
 
 </body>
 </html>
+<script>
+function copyRegulatorLinks() {
+    var select = document.getElementById('stateSelect');
+    if (!select || !select.value) {
+        alert('Please select a state first.');
+        return;
+    }
+
+    var state = select.value;
+
+    var doiQuery = encodeURIComponent(state + ' department of insurance consumer complaint');
+    var agQuery  = encodeURIComponent(state + ' attorney general consumer complaint ambulance billing');
+
+    var doiUrl = 'https://www.google.com/search?q=' + doiQuery;
+    var agUrl  = 'https://www.google.com/search?q=' + agQuery;
+
+    var text = 'Department of Insurance search:\n' + doiUrl +
+               '\n\nAttorney General / consumer protection search:\n' + agUrl;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text)
+            .then(function () {
+                alert('Regulator search links copied to clipboard.');
+            })
+            .catch(function () {
+                alert('Could not copy automatically. Please copy manually:\n\n' + text);
+            });
+    } else {
+        alert('Copy is not supported in this browser. Please copy these links:\n\n' + text);
+    }
+}
+</script>

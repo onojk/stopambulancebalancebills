@@ -536,3 +536,29 @@ nav a {
   font-size: 0.84rem;
   color: var(--text-muted);
 }
+
+/* --- Stories page layout tweak ---
+   Make the top section use the same wide layout as the rest of the site. */
+.stories-page .content-narrow {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* ===============================
+   Single-line nav (Option A)
+   Forces nav links onto one row.
+   =============================== */
+
+.nav-links {
+  display: flex;
+  flex-wrap: nowrap;      /* prevent wrapping to second line */
+  white-space: nowrap;    /* keep labels on one line */
+  gap: 1.25rem;
+  overflow-x: auto;       /* allow gentle horizontal scroll on very small screens */
+  scrollbar-width: none;  /* hide scrollbar (Firefox) */
+}
+
+.nav-links::-webkit-scrollbar {
+  display: none;          /* hide scrollbar (Chrome/Safari) */
+}

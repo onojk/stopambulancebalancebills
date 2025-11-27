@@ -20,14 +20,10 @@
       <div class="nav-tagline">Because when you call 911, you shouldn&rsquo;t get a $5,000 bill.</div>
     </div>
     <nav class="nav-links">
-      <a href="/">Home</a>
       <a href="/learn.html">Learn</a>
       <a href="/stories.html">Stories</a>
       <a href="/policy.html">Policy</a>
       <a href="/take-action.html">Take Action</a>
-      <a href="/resources.html">Resources</a>
-      <a href="/media.html">Media</a>
-      <a href="/letter-generator.html">Letter Generator</a>
       <a href="/about.html">About</a>
     </nav>
   </div>
