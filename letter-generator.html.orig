@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter Generator – Stop Ambulance Balance Bills</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .page-inner {
+            max-width: var(--max-width);
+            margin: 2.5rem auto;
+            padding: 1rem 1.25rem;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 0.8rem 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .form-field label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .form-field input,
+        .form-field textarea,
+        .form-field select {
+            width: 100%;
+            padding: 0.45rem 0.55rem;
+            border-radius: 6px;
+            border: 1px solid rgba(148,163,184,0.6);
+            background: #020617;
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+        .form-field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .output-box {
+            margin-top: 1rem;
+        }
+        #outputLetter {
+            width: 100%;
+            min-height: 260px;
+            padding: 0.7rem;
+            border-radius: 8px;
+            border: 1px solid rgba(148,163,184,0.8);
+            background: #020617;
+            color: var(--text);
+            font-size: 0.9rem;
+            resize: vertical;
+            white-space: pre-wrap;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            line-height: 1.4;
+        }
+        .hint {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.4rem;
+        }
+        .actions-row {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>Letter Generator</h1>
+    <p>Create a customized dispute or appeal letter you can copy, print, or email.</p>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="take-action.html">Take Action</a>
+        <a href="resources.html">Resources</a>
+        <a href="stories.html">Stories</a>
+        <a href="media.html">Media</a>
+        <a href="letter-generator.html">Letter Generator</a>
+        <a href="about.html">About</a>
+        <a href="policy.html">Policy</a>
+    </nav>
+</header>
+
+<main class="page-inner">
+
+<section class="card">
+    <h2>Generate Your Letter</h2>
+    <p>
+        Fill in the details below and choose who you are writing to. This tool will build a letter
+        you can copy into an email, upload to a portal, or print and mail.
+    </p>
+
+    <form id="letterForm">
+        <div class="form-grid">
+            <div class="form-field">
+                <label for="recipientType">Letter Type</label>
+                <select id="recipientType" name="recipientType">
+                    <option value="provider">Dispute Letter to Ambulance Provider</option>
+                    <option value="insurer">Appeal Letter to Insurance Company</option>
+                    <option value="regulator">Complaint Letter to State Regulator</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label for="yourName">Your Name</label>
+                <input type="text" id="yourName" name="yourName" placeholder="Your full name">
+            </div>
+
+            <div class="form-field">
+                <label for="yourAddress">Your City / State (optional)</label>
+                <input type="text" id="yourAddress" name="yourAddress" placeholder="City, State">
+            </div>
+
+            <div class="form-field">
+                <label for="dateOfService">Date of Ambulance Service</label>
+                <input type="text" id="dateOfService" name="dateOfService" placeholder="e.g., March 12, 2025">
+            </div>
+
+            <div class="form-field">
+                <label for="providerName">Ambulance Provider Name</label>
+                <input type="text" id="providerName" name="providerName" placeholder="Company or service name">
+            </div>
+
+            <div class="form-field">
+                <label for="billAmount">Bill / Balance Amount</label>
+                <input type="text" id="billAmount" name="billAmount" placeholder="$1,234.56">
+            </div>
+
+            <div class="form-field">
+                <label for="insurerName">Insurance Company</label>
+                <input type="text" id="insurerName" name="insurerName" placeholder="Plan name or insurer">
+            </div>
+
+            <div class="form-field">
+                <label for="policyId">Policy / Member ID (optional)</label>
+                <input type="text" id="policyId" name="policyId" placeholder="Policy or member ID">
+            </div>
+
+            <div class="form-field">
+                <label for="claimNumber">Claim Number (if known)</label>
+                <input type="text" id="claimNumber" name="claimNumber" placeholder="Claim number from EOB">
+            </div>
+
+            <div class="form-field">
+                <label for="impact">How this bill affects you (optional)</label>
+                <textarea id="impact" name="impact" placeholder="Briefly describe the financial or emotional impact, if you wish."></textarea>
+            </div>
+        </div>
+
+        <div class="actions-row">
+            <button type="button" class="btn btn-primary" onclick="generateLetter()">Generate Letter</button>
+            <button type="button" class="btn btn-ghost" onclick="openPrintView()">Print / Save as PDF</button>
+            <button type="button" class="btn btn-ghost" onclick="downloadLetter()">Download .TXT</button>
+        </div>
+    </form>
+
+    <p class="hint">
+        This tool does not provide legal advice. Review the letter before sending and adjust the language
+        to fit your situation and any requirements from your insurer, provider, or state regulator.
+    </p>
+</section>
+
+<section class="card output-box">
+    <h2>Your Letter (Copy / Edit as Needed)</h2>
+    <textarea id="outputLetter" readonly></textarea>
+    <p class="hint">
+        You can select all, copy, and paste this text into an email, a secure message portal,
+        or a document to print and mail. The <strong>Print / Save as PDF</strong> button opens a clean print view,
+        and <strong>Download .TXT</strong> saves the letter as a text file.
+    </p>
+</section>
+
+
+<section class="card tips">
+    <h2>How to Send This Letter</h2>
+    <p class="hint">
+        These are general tips, not legal advice. Adjust for your situation and your states rules.
+    </p>
+
+    <details open>
+        <summary>Email vs. Mail vs. Portal</summary>
+        <p>
+            Many insurers and providers now accept documents by secure online portal, email, or postal mail.
+            If possible, use whatever method they recommend for disputes or appeals.
+        </p>
+        <ul>
+            <li><strong>Portal:</strong> Upload the letter as a PDF or text file and keep a screenshot of the upload confirmation.</li>
+            <li><strong>Email:</strong> Send as plain text or attach the TXT or PDF file. Save a copy of the sent message.</li>
+            <li><strong>Mail:</strong> Print the letter and consider using tracking or certified mail for important disputes.</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>Subject Line Suggestions</summary>
+        <ul>
+            <li><strong>Provider dispute:</strong> Dispute of Ambulance Balance Bill – [Date of Service]</li>
+            <li><strong>Insurance appeal:</strong> Appeal of Ambulance Claim – [Date of Service], [Claim #]</li>
+            <li><strong>Regulator complaint:</strong> Complaint – Ambulance Balance Billing – [Your City/State]</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>What to Attach</summary>
+        <ul>
+            <li>A copy of the ambulance bill.</li>
+            <li>Your Explanation of Benefits (EOB) from the insurer, if available.</li>
+            <li>Any prior letters or emails you have already sent.</li>
+            <li>Notes of phone calls, including dates, names, and what was said.</li>
+        </ul>
+        <p class="hint">
+            Black out sensitive numbers, such as full account or ID numbers, if you are concerned about privacy when emailing.
+        </p>
+    </details>
+
+    <details>
+        <summary>Follow-Up and Timelines</summary>
+        <ul>
+            <li>Ask your insurer how long an appeal decision usually takes, often 30 to 60 days.</li>
+            <li>Set a reminder to follow up if you have not received a response.</li>
+            <li>If you receive collection letters while an appeal or dispute is open, keep copies and mention that in any complaint to regulators.</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>Keep Copies of Everything</summary>
+        <ul>
+            <li>Save a copy of each letter you send.</li>
+            <li>Keep upload confirmations or mail receipts in the same folder.</li>
+            <li>Write down each step you take; this helps if you later file a state complaint.</li>
+        </ul>
+    </details>
+
+
+    <details>
+        <summary>What to Say If You Call</summary>
+        <p>If you prefer to call instead of only sending a letter, you can use simple language and then follow up in writing.</p>
+
+        <p><strong>When calling the ambulance provider:</strong><br>
+        "I received an ambulance bill for emergency services on [date]. I am calling to dispute the amount. Under AB 716, emergency ground ambulance providers cannot balance bill patients beyond in-network cost sharing. I am requesting an itemized bill and a written response. Please note my dispute on the account."</p>
+
+        <p><strong>When calling the insurance company:</strong><br>
+        "I am calling about my ambulance claim for services on [date]. I would like to file an appeal or request a reconsideration. Can you confirm the appeal is open and provide the expected timeline for a decision?"</p>
+
+        <p><strong>When calling a state regulator:</strong><br>
+        "I want to file a complaint about an ambulance bill and how the claim was handled. Can you tell me where to submit the complaint and what information you need?"</p>
+
+        <p class="hint">Write down the date, time, and name of anyone you talk to. Follow up with a written letter, email, or complaint form.</p>
+    </details>
+
+    <details>
+        <summary>What to Say If You Call</summary>
+        <p>If you prefer to call instead of only sending a letter, you can use simple language like this and then follow up in writing.</p>
+
+        <p><strong>When calling the ambulance provider:</strong><br>
+        "I received an emergency ground ambulance bill for services on [date]. I am calling to dispute the amount. Under California AB 716, emergency ground ambulance providers cannot balance bill patients beyond their in-network cost sharing. Please note my dispute on the account and send me an itemized bill and a written response."</p>
+
+        <p><strong>When calling the insurance company:</strong><br>
+        "I am calling about an ambulance claim for services on [date]. I would like to file an appeal and ask that you reconsider the allowed amount. Please confirm that an appeal has been opened and tell me how long a decision will take."</p>
+
+        <p><strong>When calling a state regulator:</strong><br>
+        "I would like to file a complaint about an ambulance bill and how the claim was handled. Can you tell me how to submit my complaint and what information you need from me?"</p>
+
+        <p class="hint">Write down the date, time, and name of anyone you speak with. Follow up with a written letter, email, or online complaint whenever possible.</p>
+    </details>
+</section>
+
+
+<section class="card tips">
+    <h2>How to Send This Letter</h2>
+    <p class="hint">
+        These are general tips, not legal advice. Adjust for your situation and your states rules.
+    </p>
+
+    <details open>
+        <summary>Email vs. Mail vs. Portal</summary>
+        <p>
+            Many insurers and providers now accept documents by secure online portal, email, or postal mail.
+            If possible, use whatever method they recommend for disputes or appeals.
+        </p>
+        <ul>
+            <li><strong>Portal:</strong> Upload the letter as a PDF or text file and keep a screenshot of the upload confirmation.</li>
+            <li><strong>Email:</strong> Send as plain text or attach the TXT or PDF file. Save a copy of the sent message.</li>
+            <li><strong>Mail:</strong> Print the letter and consider using tracking or certified mail for important disputes.</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>Subject Line Suggestions</summary>
+        <ul>
+            <li><strong>Provider dispute:</strong> Dispute of Ambulance Balance Bill – [Date of Service]</li>
+            <li><strong>Insurance appeal:</strong> Appeal of Ambulance Claim – [Date of Service], [Claim #]</li>
+            <li><strong>Regulator complaint:</strong> Complaint – Ambulance Balance Billing – [Your City/State]</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>What to Attach</summary>
+        <ul>
+            <li>A copy of the ambulance bill.</li>
+            <li>Your Explanation of Benefits (EOB) from the insurer, if available.</li>
+            <li>Any prior letters or emails you have already sent.</li>
+            <li>Notes of phone calls, including dates, names, and what was said.</li>
+        </ul>
+        <p class="hint">
+            Black out sensitive numbers, such as full account or ID numbers, if you are concerned about privacy when emailing.
+        </p>
+    </details>
+
+    <details>
+        <summary>Follow-Up and Timelines</summary>
+        <ul>
+            <li>Ask your insurer how long an appeal decision usually takes, often 30 to 60 days.</li>
+            <li>Set a reminder to follow up if you have not received a response.</li>
+            <li>If you receive collection letters while an appeal or dispute is open, keep copies and mention that in any complaint to regulators.</li>
+        </ul>
+    </details>
+
+    <details>
+        <summary>Keep Copies of Everything</summary>
+        <ul>
+            <li>Save a copy of each letter you send.</li>
+            <li>Keep upload confirmations or mail receipts in the same folder.</li>
+            <li>Write down each step you take; this helps if you later file a state complaint.</li>
+        </ul>
+    </details>
+</section>
+
+<section class="card call-scripts">
+    <h2>What to Say If You Call</h2>
+    <p class="hint">
+        If you prefer to call first and then follow up in writing, these are simple examples of what you might say.
+        Adjust the wording to fit your situation.
+    </p>
+
+    <details>
+        <summary>Calling the Ambulance Provider</summary>
+        <p>
+            "I received an ambulance bill for emergency services on [date]. I am calling to dispute the amount.
+            My understanding is that emergency ground ambulance providers cannot balance bill patients beyond
+            in-network cost sharing. I am requesting an itemized bill and a written response. Please note my
+            dispute on the account and pause any collection activity while this is reviewed."
+        </p>
+    </details>
+
+    <details>
+        <summary>Calling the Insurance Company</summary>
+        <p>
+            "I am calling about an ambulance claim for services on [date]. I would like to file an appeal or
+            request a reconsideration of the allowed amount. Can you confirm that an appeal has been opened and
+            tell me the timeline for a decision? I would also like instructions for submitting any supporting
+            documents in writing."
+        </p>
+    </details>
+
+    <details>
+        <summary>Calling a State Regulator</summary>
+        <p>
+            "I want to file a complaint about an ambulance bill and how the claim was handled. Can you tell me
+            where to submit the complaint and what information you need from me, such as copies of the bill,
+            explanation of benefits, or prior correspondence?"
+        </p>
+        <p class="hint">
+            After any phone call, write down the date, time, and the name of the person you spoke with, and
+            follow up with a letter, email, or online complaint form.
+        </p>
+    </details>
+</section>
+
+<section class="card examples">
+    <h2>Example Letters</h2>
+    <p class="hint">
+        These sample letters show what a completed message looks like. Feel free to copy useful lines,
+        but make sure to customize your own letter with your specific details.
+    </p>
+
+    <details>
+        <summary><strong>Example Provider Dispute Letter</strong></summary>
+        <pre style="white-space: pre-wrap; font-size:0.85rem; margin-top:0.6rem;">
+[Your Name]
+[City, State]
+[Date]
+
+[Ambulance Provider Name]
+
+RE: Dispute of Ambulance Balance Bill – [Date of Service]
+
+To whom it may concern,
+
+I am writing to dispute the ambulance balance bill issued for services provided on [Date of Service]. The amount billed or remaining balance is [Dollar Amount]. I am requesting a detailed review of these charges and a pause on any collection activity while the review is conducted.
+
+Please provide:
+• A complete itemized bill with all codes and charges listed.
+• An explanation of how the billed amount was calculated.
+• Clarification on whether this service is considered in-network or out-of-network.
+
+My insurer for this claim is [Insurance Company], Policy ID [Policy ID], Claim #[Claim Number].
+
+Thank you for reviewing this matter. I look forward to a written response.
+
+Sincerely,
+[Your Name]
+        </pre>
+    </details>
+
+    <details>
+        <summary><strong>Example Insurance Appeal Letter</strong></summary>
+        <pre style="white-space: pre-wrap; font-size:0.85rem; margin-top:0.6rem;">
+[Your Name]
+[City, State]
+[Date]
+
+Appeals Department
+[Insurance Company]
+
+RE: Appeal of Ambulance Claim – [Date of Service], Claim #[Claim Number]
+
+To the Appeals Department,
+
+I am appealing the payment determination for ambulance services received on [Date of Service]. The provider for this claim is [Ambulance Provider], and the billed or remaining balance is [Dollar Amount].
+
+I believe the current reimbursement does not reasonably reflect the emergency nature of the service. I request reconsideration of the allowed amount and a written explanation of your findings.
+
+Please review:
+• Whether emergency ground ambulance services should be treated as in-network.
+• Any applicable internal policies, exceptions, or state regulations.
+• Whether adjustment or negotiation with the provider is appropriate.
+
+Thank you for your attention to this appeal. Please confirm when it has been opened and provide the expected timeline for a decision.
+
+Sincerely,
+[Your Name]
+        </pre>
+    </details>
+
+    <details>
+        <summary><strong>Example Regulator Complaint Letter</strong></summary>
+        <pre style="white-space: pre-wrap; font-size:0.85rem; margin-top:0.6rem;">
+[Your Name]
+[City, State]
+[Date]
+
+[State Department of Insurance / Consumer Protection Office]
+
+RE: Complaint Regarding Ambulance Billing – [Date of Service]
+
+To whom it may concern,
+
+I am filing a complaint regarding an ambulance balance bill I received for services on [Date of Service]. The ambulance provider is [Ambulance Provider], and the billed or remaining balance is [Dollar Amount]. My insurer is [Insurance Company].
+
+I have attempted to resolve this issue by disputing the bill with the provider and submitting an appeal to my insurance company. Despite these efforts, I believe the charges and/or claim handling are unfair or inconsistent with consumer protections.
+
+I am requesting a review and any guidance on available remedies or next steps.
+
+Sincerely,
+[Your Name]
+        </pre>
+    </details>
+
+</section>
+
+
+<section class="card regulator-helper">
+    <h2>Find Your State Regulator</h2>
+    <p class="hint">
+        Many states allow you to file a complaint about ambulance billing with a state regulator,
+        often the department of insurance or attorney general. This tool gives you search phrases
+        you can use to find the official complaint page for your state.
+    </p>
+
+    <label for="stateSelect" class="hint">Select your state:</label>
+    <select id="stateSelect" class="regulator-helper-select" onchange="updateRegulatorInfo()">
+        <option value="">-- Choose a state --</option>
+        <option value="Alabama">Alabama</option>
+        <option value="Alaska">Alaska</option>
+        <option value="Arizona">Arizona</option>
+        <option value="Arkansas">Arkansas</option>
+        <option value="California">California</option>
+        <option value="Colorado">Colorado</option>
+        <option value="Connecticut">Connecticut</option>
+        <option value="Delaware">Delaware</option>
+        <option value="District of Columbia">District of Columbia</option>
+        <option value="Florida">Florida</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Hawaii">Hawaii</option>
+        <option value="Idaho">Idaho</option>
+        <option value="Illinois">Illinois</option>
+        <option value="Indiana">Indiana</option>
+        <option value="Iowa">Iowa</option>
+        <option value="Kansas">Kansas</option>
+        <option value="Kentucky">Kentucky</option>
+        <option value="Louisiana">Louisiana</option>
+        <option value="Maine">Maine</option>
+        <option value="Maryland">Maryland</option>
+        <option value="Massachusetts">Massachusetts</option>
+        <option value="Michigan">Michigan</option>
+        <option value="Minnesota">Minnesota</option>
+        <option value="Mississippi">Mississippi</option>
+        <option value="Missouri">Missouri</option>
+        <option value="Montana">Montana</option>
+        <option value="Nebraska">Nebraska</option>
+        <option value="Nevada">Nevada</option>
+        <option value="New Hampshire">New Hampshire</option>
+        <option value="New Jersey">New Jersey</option>
+        <option value="New Mexico">New Mexico</option>
+        <option value="New York">New York</option>
+        <option value="North Carolina">North Carolina</option>
+        <option value="North Dakota">North Dakota</option>
+        <option value="Ohio">Ohio</option>
+        <option value="Oklahoma">Oklahoma</option>
+        <option value="Oregon">Oregon</option>
+        <option value="Pennsylvania">Pennsylvania</option>
+        <option value="Rhode Island">Rhode Island</option>
+        <option value="South Carolina">South Carolina</option>
+        <option value="South Dakota">South Dakota</option>
+        <option value="Tennessee">Tennessee</option>
+        <option value="Texas">Texas</option>
+        <option value="Utah">Utah</option>
+        <option value="Vermont">Vermont</option>
+        <option value="Virginia">Virginia</option>
+        <option value="Washington">Washington</option>
+        <option value="West Virginia">West Virginia</option>
+        <option value="Wisconsin">Wisconsin</option>
+        <option value="Wyoming">Wyoming</option>
+    </select>
+
+    
+    <button type="button" class="btn btn-primary" onclick="copySearchPhrases()" style="margin-top:0.8rem;">
+        Copy Complaint Search Terms
+    </button>
+    <button type="button" class="btn btn-ghost" onclick="copyRegulatorLinks()" style="margin-top:0.4rem;">
+        Copy Regulator Search Links
+    </button>
+
+<div id="regulatorInfo" class="regulator-info">
+        <p>Select your state to see suggestions for who to contact.</p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>© 2025 Stop Ambulance Balance Bills – Providing tools to help patients push back against unfair charges.</p>
+</footer>
+
+<script>
+function generateLetter() {
+    var type = document.getElementById("recipientType").value;
+    var yourName = document.getElementById("yourName").value || "[Your Name]";
+    var yourAddress = document.getElementById("yourAddress").value;
+    var dateOfService = document.getElementById("dateOfService").value || "[Date of Service]";
+    var providerName = document.getElementById("providerName").value || "[Ambulance Provider]";
+    var billAmount = document.getElementById("billAmount").value || "[Bill Amount]";
+    var insurerName = document.getElementById("insurerName").value || "[Insurance Company]";
+    var policyId = document.getElementById("policyId").value;
+    var claimNumber = document.getElementById("claimNumber").value;
+    var impact = document.getElementById("impact").value;
+
+    var today = new Date();
+    var todayStr = today.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+
+    var headerLines = [];
+    headerLines.push(yourName);
+    if (yourAddress) {
+        headerLines.push(yourAddress);
+    }
+    headerLines.push(todayStr);
+    headerLines.push("");
+
+    var subjectLine = "";
+    var toLine = "";
+    var body = "";
+
+    if (type === "provider") {
+        toLine = providerName;
+        subjectLine = "RE: Ambulance Balance Bill for " + dateOfService;
+
+        body += "To whom it may concern,\n\n";
+        body += "I am writing to dispute the ambulance balance bill I received for transport on " + dateOfService + ". ";
+        body += "The total amount billed or remaining balance is " + billAmount + ". ";
+        body += "I am requesting a detailed review of these charges and a pause on any collection activity while the review is completed.\n\n";
+        body += "Please provide the following in writing:\n";
+        body += "• A full itemized bill with all billing codes and charges listed.\n";
+        body += "• An explanation of how the amount billed was calculated.\n";
+        body += "• Whether you consider this bill to be in-network or out-of-network, and why.\n\n";
+        body += "I am also asking that you confirm in writing that you will not send this account to collections ";
+        body += "or report it to credit agencies while my dispute and any related insurance appeals are pending.\n\n";
+        if (insurerName || claimNumber || policyId) {
+            body += "My insurance information is as follows:\n";
+            if (insurerName) body += "• Insurance company: " + insurerName + "\n";
+            if (policyId) body += "• Policy / Member ID: " + policyId + "\n";
+            if (claimNumber) body += "• Claim number: " + claimNumber + "\n";
+            body += "\n";
+        }
+        if (impact) {
+            body += "Impact on me:\n" + impact + "\n\n";
+        }
+        body += "Thank you for your prompt attention to this matter. I look forward to your written response.\n\n";
+        body += "Sincerely,\n" + yourName + "\n";
+
+    } else if (type === "insurer") {
+        toLine = insurerName;
+        subjectLine = "RE: Appeal of Ambulance Claim for " + dateOfService;
+
+        body += "To the Appeals Department,\n\n";
+        body += "I am writing to appeal the payment decision for my ambulance claim related to services on " + dateOfService + ". ";
+        body += "The associated ambulance provider is " + providerName + ", and the billed or remaining balance is " + billAmount + ".\n\n";
+        body += "I believe the current payment determination does not reflect a fair or appropriate amount for this emergency service. ";
+        body += "I am requesting a full reconsideration of the allowed amount and a written explanation of your findings.\n\n";
+        body += "Please review:\n";
+        body += "• Whether the ambulance should be treated as in-network under my plan.\n";
+        body += "• Any internal policies or exceptions that may apply to emergency ground ambulance services.\n";
+        body += "• Whether additional negotiation or adjustment with the provider is possible.\n\n";
+        if (policyId || claimNumber) {
+            body += "My policy information:\n";
+            if (policyId) body += "• Policy / Member ID: " + policyId + "\n";
+            if (claimNumber) body += "• Claim number: " + claimNumber + "\n";
+            body += "\n";
+        }
+        if (impact) {
+            body += "Impact on me:\n" + impact + "\n\n";
+        }
+        body += "Please confirm in writing when this appeal has been opened and provide the timeline for a decision. ";
+        body += "I request that no adverse actions be taken while this appeal is under review.\n\n";
+        body += "Sincerely,\n" + yourName + "\n";
+
+    } else if (type === "regulator") {
+        toLine = "[State Department of Insurance or Consumer Protection Office]";
+        subjectLine = "RE: Complaint Regarding Ambulance Billing Practices";
+
+        body += "To whom it may concern,\n\n";
+        body += "I am submitting a complaint regarding an ambulance balance bill I received for services on " + dateOfService + ". ";
+        body += "The ambulance provider is " + providerName + " and the billed or remaining balance is " + billAmount + ". ";
+        body += "My insurance company is " + insurerName + ".\n\n";
+        body += "I have attempted to resolve this matter directly with the provider and my insurer by requesting an itemized bill ";
+        body += "and submitting a written dispute and/or appeal. Despite these efforts, I believe the charges and/or the handling of ";
+        body += "the claim are unfair or inconsistent with consumer protections.\n\n";
+        if (impact) {
+            body += "Impact on me:\n" + impact + "\n\n";
+        }
+        if (policyId || claimNumber) {
+            body += "Additional information:\n";
+            if (policyId) body += "• Policy / Member ID: " + policyId + "\n";
+            if (claimNumber) body += "• Claim number: " + claimNumber + "\n";
+            body += "\n";
+        }
+        body += "I respectfully request that your office review this case and advise on any next steps or remedies available. ";
+        body += "Please let me know if you require copies of bills, explanation of benefits documents, or correspondence.\n\n";
+        body += "Thank you for your time and attention.\n\n";
+        body += "Sincerely,\n" + yourName + "\n";
+    }
+
+    var letter = "";
+    for (var i = 0; i < headerLines.length; i++) {
+        letter += headerLines[i] + "\n";
+    }
+    if (toLine) {
+        letter += toLine + "\n\n";
+    }
+    if (subjectLine) {
+        letter += subjectLine + "\n\n";
+    }
+    letter += body;
+
+    document.getElementById("outputLetter").value = letter;
+}
+
+function openPrintView() {
+    var letter = document.getElementById("outputLetter").value;
+    if (!letter.trim()) {
+        alert("Please generate a letter first.");
+        return;
+    }
+
+    var printWin = window.open("", "_blank");
+    var safeText = letter
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    printWin.document.write("<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Print Letter</title>");
+    printWin.document.write("<style>body{font-family:serif;font-size:14px;margin:40px;white-space:pre-wrap;}@media print{body{margin:20px;}}</style>");
+    printWin.document.write("</head><body>");
+    printWin.document.write(safeText);
+    printWin.document.write("
+
+
+<script>
+function updateRegulatorInfo() {
+    var select = document.getElementById("stateSelect");
+    if (!select) return;
+
+    var state = select.value;
+    var box = document.getElementById("regulatorInfo");
+    if (!box) return;
+
+    if (!state) {
+        box.innerHTML = "<p>Select your state to see suggestions for who to contact.</p>";
+        return;
+    }
+
+    var text =
+        "For " + state + ", you can usually start with:<br><br>" +
+        "• Your state&#39;s Department of Insurance (search: \"" + state + " department of insurance complaint\").<br>" +
+        "• Your state&#39;s Attorney General or consumer protection division (search: \"" + state + " attorney general ambulance billing complaint\").<br><br>" +
+        "Use the official site ending in .gov whenever possible.";
+
+    box.innerHTML = "<p>" + text + "</p>";
+}
+</script>
+<script>
+function updateRegulatorInfo() {
+    var select = document.getElementById("stateSelect");
+    if (!select) return;
+
+    var state = select.value;
+    var box = document.getElementById("regulatorInfo");
+    if (!box) return;
+
+    if (!state) {
+        box.innerHTML = "<p>Select your state to see suggestions for who to contact.</p>";
+        return;
+    }
+
+    // Build Google search URLs for this state
+    var doiQuery = encodeURIComponent(state + " department of insurance consumer complaint");
+    var agQuery  = encodeURIComponent(state + " attorney general consumer complaint ambulance billing");
+
+    var doiUrl = "https://www.google.com/search?q=" + doiQuery;
+    var agUrl  = "https://www.google.com/search?q=" + agQuery;
+
+    var html  = "<p>For " + state + ", you can usually start with:</p>";
+    html += "<ul>";
+    html += "<li><a href=\"" + doiUrl + "\" target=\"_blank\" rel=\"noopener noreferrer\">Search for your Department of Insurance complaint page</a></li>";
+    html += "<li><a href=\"" + agUrl + "\" target=\"_blank\" rel=\"noopener noreferrer\">Search for your Attorney General / consumer protection complaint page</a></li>";
+    html += "</ul>";
+    html += "<p class=\"hint\">Look for official sites that end in .gov whenever possible.</p>";
+
+    box.innerHTML = html;
+}
+</script>
+
+<script>
+function copySearchPhrases() {
+    var state = document.getElementById("stateSelect").value;
+    if (!state) {
+        alert("Please select a state first.");
+        return;
+    }
+
+    var phrase = state + " ambulance billing complaint Department of Insurance Attorney General";
+
+    navigator.clipboard.writeText(phrase)
+        .then(() => {
+            alert("Search terms copied to clipboard.");
+        })
+        .catch(err => {
+            alert("Could not copy. Please copy manually: " + phrase);
+        });
+}
+</script>
+</body></html>"
+
+
+
+</body>
+</html>

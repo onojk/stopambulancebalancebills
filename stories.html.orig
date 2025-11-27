@@ -17,8 +17,6 @@
         <a href="take-action.html">Take Action</a>
         <a href="resources.html">Resources</a>
         <a href="stories.html">Stories</a>
-        <a href="media.html">Media</a>
-        <a href="letter-generator.html">Letter Generator</a>
         <a href="about.html">About</a>
         <a href="policy.html">Policy</a>
     </nav>
@@ -101,8 +99,8 @@
     </ol>
 
     <p>
-        <a class="email-button" href="mailto:info@stopambulancebalancebills.org?subject=My%20Ambulance%20Billing%20Story">
-            Email Your Story
+        <a href="mailto:info@stopambulancebalancebills.org?subject=My%20Ambulance%20Billing%20Story">
+            Email your story to info@stopambulancebalancebills.org
         </a>
     </p>
 
