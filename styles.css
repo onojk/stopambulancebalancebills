@@ -562,3 +562,141 @@ nav a {
 .nav-links::-webkit-scrollbar {
   display: none;          /* hide scrollbar (Chrome/Safari) */
 }
+
+/* BEGIN NAVBAR AUTO */
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.logo-mark {
+  font-size: 1.5rem;
+}
+
+.logo-text-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #111827;
+}
+
+.logo-tagline {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.main-nav a {
+  font-size: 0.95rem;
+  text-decoration: none;
+  color: #374151;
+  padding: 0.4rem 0;
+  position: relative;
+}
+
+.main-nav a:hover {
+  color: #111827;
+}
+
+.main-nav a.active {
+  font-weight: 600;
+}
+
+.main-nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.25rem;
+  height: 2px;
+  background: #2563eb;
+  border-radius: 999px;
+}
+
+/* Hamburger button */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin: 3px 0;
+  background: #111827;
+  border-radius: 999px;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+  .logo-tagline {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .main-nav {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: 0.75rem 1rem 1rem;
+    background: #ffffff;
+    flex-direction: column;
+    gap: 0.75rem;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+    transform: translateY(-120%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .main-nav.is-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .main-nav a {
+    padding: 0.5rem 0;
+  }
+}
+/* END NAVBAR AUTO */
+
